@@ -59,13 +59,17 @@ body{
 .otp .form-control{
     text-align: center;
 }
+.login-page .form-control{
+    text-align: center;
+}
 .form-control{
     border: 0;
     border-radius: 0;
     border-bottom: 1px solid #aaa;
-    text-align: center;
+    background-color: transparent;
 }
 .form-control:focus{
+    background-color: transparent;
     border-bottom: 1px solid #36356d;
     background-color: none;
     box-shadow: none;
@@ -78,27 +82,42 @@ a:hover{
     text-decoration: underline;
 }
 .main{
-    padding-top: 2rem;
+    padding-top: 1rem;
     padding-bottom: 2rem;
 }
 
 /* dashboard */
+.nav.nav-tabs{
+    min-width: 100%;
+}
 .dashboard .nav-link{
-    color: #aaa;
+    color: #555;
 }
 .dashboard .nav-link.active{
     color: #36356d;
 }
-/* .dashboard nav::-webkit-scrollbar {
-    display: none;
-} */
  .dashboard nav {
     overflow-x: scroll;
-  /* -ms-overflow-style: none; */
-  /* scrollbar-width: none;  */
 }
 .dashboard .tab-pane{
     padding: 1rem;
     border: 1px solid #DDD;
     border-top: none;
+}
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+.form-check-input{
+    width: 1.5em;
+    height: 1.5em;
+}
+.dashboard>h1{
+    margin-bottom: 1rem;
+}
+.navbar-toggler{
+    border: none;
+    box-shadow: none !important;
 }
