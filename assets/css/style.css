@@ -43,6 +43,12 @@ body{
     color: #fff;
     background-color: #36356d;
 }
+.btn-blue-dark,.btn-blue-dark:hover{
+    color: #fff;
+    background-color: #36356d;
+    border-radius: 0;
+    min-width: 150px;
+}
 .login-image{
     background-image: url(../img/image.jpg);
     height: 100%;
@@ -82,42 +88,90 @@ a:hover{
     text-decoration: underline;
 }
 .main{
-    padding-top: 1rem;
-    padding-bottom: 2rem;
+    padding: 1.5rem;
 }
-
-/* dashboard */
+.main .room-select{
+    margin-left:5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+.main .room-select h3{
+    padding: 0;
+}
+/* room */
 .nav.nav-tabs{
     min-width: 100%;
 }
-.dashboard .nav-link{
+.room .nav-link{
     color: #555;
 }
-.dashboard .nav-link.active{
+.room .nav-link.active{
     color: #36356d;
 }
- .dashboard nav {
+.room nav {
     overflow-x: scroll;
 }
-.dashboard .tab-pane{
+.room .tab-pane{
     padding: 1rem;
     border: 1px solid #DDD;
     border-top: none;
 }
 .form-check {
     display: flex;
-    align-items: center;
     gap: 10px;
     margin: 10px 0;
+    align-items: center;
 }
 .form-check-input{
-    width: 1.5em;
-    height: 1.5em;
+    width: 1.75rem;
+    height: 1.75rem;
 }
-.dashboard>h1{
+.room>h1{
     margin-bottom: 1rem;
+}
+.navbar-brand{
+    margin-right: auto;
 }
 .navbar-toggler{
     border: none;
     box-shadow: none !important;
+}
+.form-check-input:focus{
+    box-shadow: none;
+}
+.form-check-input:checked{
+    background-color: #36356d;
+    border-color: #36356d;
+}
+.form-check-label>span{
+    color:#aaa;
+    font-size: 12px;
+}
+.al-green, .al-blue, .al-pink{
+    height: 100%;
+}
+.al-green{
+    background-color: #cce7d3;
+}
+.al-pink{
+    background-color: #feeef0;
+}
+.al-blue{
+    background-color: #adebff;
+}
+/* cart */
+.cart{
+    background-color: #fff;
+    padding: 2px 1rem;
+    box-shadow: 0 0 5px #aaa;
+    width: 100%;
+}
+.cart h6{
+    margin-bottom: 5px;
+    font-weight: 600;
+    text-align: center;
+    color: #888;
+}
+.cart h6 b{
+    color: #111;
 }

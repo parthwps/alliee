@@ -1,9 +1,8 @@
 <?php include("common.php");?>
 <style>
-  #otp-form {
+#otp-form {
   display: none;
 }
-
 .login-form.slide-out {
   animation: slideOut 0.5s forwards;
 }
@@ -60,7 +59,7 @@
     </div>
 
     <div class="otp-form text-center" id="otp-form">
-      <form action="dashboard.php">
+      <form action="dashboard.php" method="post">
         <div class="mb-4">
           <label for="mobile" class="form-label">Enter OTP : </label>
           <div class="otp">
