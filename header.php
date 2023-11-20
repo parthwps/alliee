@@ -3,6 +3,7 @@
     <a class="navbar-brand" href="/">
       <img src="assets/img/logo.png" alt="Bootstrap" class="logo">
     </a>
+    Hi, <?php echo $_SESSION['udetails'];?><span class="mx-2">|</span>
     <a href="#">Profile</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

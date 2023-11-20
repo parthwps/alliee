@@ -59,17 +59,17 @@
     </div>
 
     <div class="otp-form text-center" id="otp-form">
-      <form action="dashboard.php" method="post">
+      <form >
         <div class="mb-4">
           <label for="mobile" class="form-label">Enter OTP : </label>
           <div class="otp">
-            <input type="number" class="form-control mobile-input otpf" id="otpf" maxlength="1">
-            <input type="number" class="form-control mobile-input otpf" maxlength="1">
-            <input type="number" class="form-control mobile-input otpf" maxlength="1">
-            <input type="number" class="form-control mobile-input otpf" maxlength="1">
+            <input type="number" class="form-control mobile-input otpf" id="otp1" maxlength="1">
+            <input type="number" class="form-control mobile-input otpf" id="otp2" maxlength="1">
+            <input type="number" class="form-control mobile-input otpf" id="otp3" maxlength="1">
+            <input type="number" class="form-control mobile-input otpf" id="otp4" maxlength="1">
           </div>
         </div>
-        <button type="submit" class="btn btn-blue">LOGIN</button>
+        <button type="button" class="btn btn-blue" id="verifyOtp">LOGIN</button>
       </form>
       <p class="mt-2 d-flex justify-content-between"><button type="button" class="btn">RESEND</button><button type="button" class="btn" id="change-number">CHANGE NUMBER</button></p>
     </div>
@@ -82,10 +82,63 @@
 
 </div>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    
-  const mobileInputs = document.querySelectorAll(".mobile-input");
 
+$(document).ajaxStart(function() {
+        $("#ajax-progress").show();
+    });
+
+    $(document).ajaxStop(function() {
+        $("#ajax-progress").hide();
+    });
+
+document.addEventListener("DOMContentLoaded", function() {  
+
+
+document.getElementById("verifyOtp").addEventListener("click", function() {
+    // Get the OTP values from the input fields
+    var otp1 = document.getElementById("otp1").value;
+    var otp2 = document.getElementById("otp2").value;
+    var otp3 = document.getElementById("otp3").value;
+    var otp4 = document.getElementById("otp4").value;
+
+    // Concatenate the OTP values
+    var otp = otp1 + otp2 + otp3 + otp4;
+    var mobileNumber = document.querySelector("#mobile").value;
+
+    if(otp.length == 4){
+    
+    $("#ajax-progress").show();
+    $.ajax({
+        type: "POST",
+        url: "verifyotp.php",
+        data: { otp: otp, mobile: mobileNumber },
+        success: function(response) {
+          if (response.startsWith("1,")) {
+            window.location.href = "dashboard.php";
+          }else if (response.startsWith("2,")) {
+            window.location.href = "profile.php";
+          } else {
+            alert("Error: " + response);
+          }
+        },
+        error: function(error) {
+            console.log("Error:", error);
+        },
+        complete: function() {
+          $("#ajax-progress").hide();
+        }
+    });
+    }else{
+      alert("Invalid OTP")
+    }
+});
+
+
+
+
+
+
+  const mobileInputs = document.querySelectorAll(".mobile-input");
   mobileInputs.forEach(function(input) {
     input.addEventListener("input", function() {
       const maxLength = parseInt(this.getAttribute('maxlength'));
@@ -125,15 +178,55 @@ document.addEventListener("DOMContentLoaded", function() {
   const changenumber = document.getElementById("change-number");
 
   getOtpButton.addEventListener("click", function() {
-    document.querySelector(".otpf").focus();
-    otpForm.classList.remove("slide-out");
-    loginForm.classList.remove("slide-in");
-    loginForm.classList.add("slide-out");
-    otpForm.classList.add("slide-in");
-    otpForm.style.display = "block";
-    setTimeout(function() {
-      document.querySelector(".otpf").focus();
-    }, 500);
+    var mobileNumber = document.querySelector("#mobile").value;
+    // Validate mobile number
+    if (mobileNumber.trim() === "") {
+      alert("Please enter a mobile number.");
+      return;
+    }
+
+    // Check if it's a 10-digit Indian mobile number
+    if (!isValidIndianMobileNumber(mobileNumber)) {
+      alert("Please enter a valid 10-digit Indian mobile number.");
+      return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "loginrequest.php",
+        data: { mobile: mobileNumber },
+        success: function(response) {
+          if (response.startsWith("0,")) {
+            document.querySelector(".otpf").focus();
+            otpForm.classList.remove("slide-out");
+            loginForm.classList.remove("slide-in");
+            loginForm.classList.add("slide-out");
+            otpForm.classList.add("slide-in");
+            otpForm.style.display = "block";
+
+            var otpValue = response.split(",")[1].trim();
+            console.log(otpValue);
+            for (var i = 0; i < otpValue.length; i++) {
+                var inputField = document.getElementById("otp" + (i + 1));
+                if (inputField) {
+                    inputField.value = otpValue[i];
+                }
+            }
+            setTimeout(function() {
+                document.querySelector(".otpf").focus();
+            }, 500);
+          }else{
+            var errorMessage = response.split(",")[1].trim();
+            alert(errorMessage);
+          }
+        },
+        error: function(error) {
+            console.log("Error:", error);
+        },
+        complete: function() {
+          $("#ajax-progress").hide();
+        }
+    });
   });
 
   changenumber.addEventListener("click", function() {
@@ -144,6 +237,10 @@ document.addEventListener("DOMContentLoaded", function() {
     loginForm.style.display = "block";
   });
 });
+function isValidIndianMobileNumber(mobileNumber) {
+    var indianMobileNumberRegex = /^[6789]\d{9}$/;
+    return indianMobileNumberRegex.test(mobileNumber);
+}
 </script>
 
 <?php include("footer.php");?>

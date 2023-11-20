@@ -8,6 +8,16 @@ body{
 .login-page{
     height: 100vh;
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 .login-wrapper{
     position: relative;
     overflow: hidden;
@@ -93,7 +103,7 @@ a:hover{
 .main .room-select{
     margin-left:5px;
     margin-right: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 .main .room-select h3{
     padding: 0;
