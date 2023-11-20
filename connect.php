@@ -6,14 +6,11 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $username = 'root';
     $password = '';
 } else {
-    $host = 'charmiel_alliee';
+    $host = 'localhost';
     $dbname = 'charmiel_alliee';
-    $username = 'root';
+    $username = 'charmiel_alliee';
     $password = 'Balaji@1234';
 }
-
-
-
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
