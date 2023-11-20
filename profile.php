@@ -33,7 +33,7 @@
         var lastName = $("#lastName").val();
 
         // Check if first name and last name are not blank
-        if (firstName.trim() === '' || lastName.trim() === '') {
+        if (firstName === '' || lastName === '') {
             alert("First name and last name cannot be blank.");
             return;
         }
