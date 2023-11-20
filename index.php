@@ -180,7 +180,7 @@ document.getElementById("verifyOtp").addEventListener("click", function() {
   getOtpButton.addEventListener("click", function() {
     var mobileNumber = document.querySelector("#mobile").value;
     // Validate mobile number
-    if (mobileNumber.strip() === "") {
+    if (mobileNumber.replace(/\s+/g, ' ') === "") {
       alert("Please enter a mobile number.");
       return;
     }
@@ -204,7 +204,7 @@ document.getElementById("verifyOtp").addEventListener("click", function() {
             otpForm.classList.add("slide-in");
             otpForm.style.display = "block";
 
-            var otpValue = response.split(",")[1].strip();
+            var otpValue = response.split(",")[1].replace(/\s+/g, ' ');
             console.log(otpValue);
             for (var i = 0; i < otpValue.length; i++) {
                 var inputField = document.getElementById("otp" + (i + 1));
@@ -216,7 +216,7 @@ document.getElementById("verifyOtp").addEventListener("click", function() {
                 document.querySelector(".otpf").focus();
             }, 500);
           }else{
-            var errorMessage = response.split(",")[1].strip();
+            var errorMessage = response.split(",")[1].replace(/\s+/g, ' ');
             alert(errorMessage);
           }
         },
