@@ -22,7 +22,7 @@ try {
         $insertStmt->bindParam(':otp', $otp);
         $insertStmt->execute();
 
-        echo "0, Mobile number does not exist. New record inserted with OTP";
+        echo "0, ".$otp.", Mobile number does not exist. New record inserted with OTP";
     }
 }
 catch(PDOException $e) {
