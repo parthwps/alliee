@@ -8,5 +8,106 @@
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+$(document).ajaxStart(function() {
+    $("#ajax-progress").show();
+});
+$(document).ajaxStop(function() {
+    $("#ajax-progress").hide();
+});
+$(document).ready(function() {
+  var storedRooms = localStorage.getItem('allRooms');
+  var storedPanels = localStorage.getItem('allPanels');
+  $.ajax({
+      type: "GET",
+      url: "ajaxfunctions.php",
+      dataType: "json",
+      data: { wf: "1" },
+      success: function(response) {
+          if (response.success) {
+              if (storedRooms === null) {
+                  localStorage.setItem('allRooms', JSON.stringify(response.rooms));
+              }
+              updaterooms();
+          } else {
+              console.error("Error fetching rooms: " + response.message);
+          }
+      },
+      error: function(error) {
+          console.error("AJAX Error:", error);
+      }
+  });
+  $.ajax({
+      type: "GET",
+      url: "ajaxfunctions.php",
+      dataType: "json",
+      data: { wf: "2" },
+      success: function(response) {
+          if (response.success) {
+              if (storedPanels === null) {
+                  localStorage.setItem('allPanels', JSON.stringify(response.panels));
+              }
+
+              updaterooms();
+          } else {
+              console.error("Error fetching rooms: " + response.message);
+          }
+      },
+      error: function(error) {
+          console.error("AJAX Error:", error);
+      }
+  });
+  
+  var storedItems = localStorage.getItem('checkedItems');
+  if (storedItems) {
+      storedItems = JSON.parse(storedItems);
+      storedItems.forEach(function(item) {
+          $('#' + item.p).prop('checked', true);
+      });
+  }
+});
+function updaterooms(){
+  var rooms = JSON.parse(localStorage.getItem('rooms'));
+  var allRooms = JSON.parse(localStorage.getItem('allRooms'));
+  var roomsContainer = $('#roomsContainer');
+  roomsContainer.empty(); 
+  rooms.forEach(function(roomId) {
+      allRooms.forEach(function(room) {
+          if(room.id == roomId){
+              var roomHtml = '<li class="nav-item"><a class="nav-link" href="foyer.php">' + room.name + '</a></li>';
+              roomsContainer.append(roomHtml);
+          }
+      });
+  });
+}
+function roomsphp(){
+  var storedItems = localStorage.getItem('checkedItems');
+  if (storedItems) {
+    storedItems = JSON.parse(storedItems);
+    if(storedItems.length !== 0){   
+      if(localStorage.getItem('currentroom') == null){
+        console.log(storedItems[0]);
+        localStorage.setItem('currentroom', 0);
+      }
+      var currentroom = localStorage.getItem('currentroom');
+      var allrooms = JSON.parse(localStorage.getItem('allRooms'));
+      var allpanels = JSON.parse(localStorage.getItem('allPanels'));
+      console.log(allpanels);
+      allrooms.forEach(function(room){
+        if(room.id == storedItems[currentroom].r){
+          document.querySelector(".room-h2").innerHTML = room.name;
+          // + "&nbsp;<h6>(" + currentroom + "/" + storedItems.length + ")</h6>"
+        }
+      });
+      allpanels.forEach(function(panel){
+        if(panel.id == storedItems[currentroom].p){
+          document.querySelector(".panel-h5").innerHTML = panel.panel;
+        }
+      });
+      console.log(storedItems);
+    }else{
+      alert("There is no Rooms selected. Select Rooms & Panels");
+    }
+  }
+}
 </script>
 </html>
