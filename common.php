@@ -14,4 +14,5 @@ session_start();
   <link href="assets/css/style.css" rel="stylesheet">
   <link rel="icon" href="assets/img/logo.png" type="image/png">
 </head>
+<?php include('functions.php');?>
 <body>

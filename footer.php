@@ -5,6 +5,8 @@
 <div class="m-5"></div>
 </body>
 <script>
-
-    </script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
 </html>

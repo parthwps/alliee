@@ -1,24 +1,30 @@
 <nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
+  <div class="container-fluid mx-3">
     <a class="navbar-brand" href="/">
       <img src="assets/img/logo.png" alt="Bootstrap" class="logo">
     </a>
-    Hi, <?php echo $_SESSION['udetails'];?><span class="mx-2">|</span>
-    <a href="#">Profile</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    Hi, 
+<?php
+$whereConditions = ["id" => $_SESSION['udetails']];
+$userDetails = selectFromTable("user", ["firstname"], $whereConditions);
+if ($userDetails) {
+  echo $userDetails['firstname'];
+} else {
+  echo "User";
+}
+?>
+    <span class="mx-2">|</span>
+    <a href="profile.php">Profile</a>
   </div>
 </nav>
 
-<!-- Room Select -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Select Rooms</h5>
+    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Selected Rooms</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" id="roomsContainer">
       <li class="nav-item"><a class="nav-link" href="foyer.php">Foyer</a></li>
       <li class="nav-item"><a class="nav-link" href="passage.php">Passage</a></li>
       <li class="nav-item"><a class="nav-link" href="living-room.php">Living Room</a></li>
