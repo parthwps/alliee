@@ -1,7 +1,6 @@
 
-<div class="row g-3">
     <div class="col-md-4 group">
-        <div class="al-green p-3">
+        <div class="compo1 p-3">
             <h3>Light Switch</h3>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="dl" value="dl">
@@ -55,7 +54,7 @@
     </div>
 
     <div class="col-md-4 group">
-        <div class="al-pink p-3">
+        <div class="compo2 p-3">
             <h3>Plug</h3>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="p1" value="p1">
@@ -94,7 +93,7 @@
     </div>
 
     <div class="col-md-4 group">
-        <div class="al-blue p-3">
+        <div class="compo3 p-3">
             <h3>Scenario</h3>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="wg" value="wg">
@@ -134,4 +133,3 @@
             </div>
         </div>
     </div>
-</div>

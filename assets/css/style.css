@@ -161,17 +161,32 @@ a:hover{
     color:#aaa;
     font-size: 12px;
 }
-.al-green, .al-blue, .al-pink{
+.compo{
     height: 100%;
 }
-.al-green{
+.compo1{
     background-color: #cce7d3;
 }
-.al-pink{
+.compo2{
+    background-color: #adebff;
+}
+.compo3{
     background-color: #feeef0;
 }
-.al-blue{
-    background-color: #adebff;
+.compo4{
+    background-color: #bde4e8; /*Curtain*/
+}
+.compo5{
+    background-color: #dad9d8; /*Heavy Load*/
+}
+.compo6{
+    background-color: #eff5d9; /*Fan*/
+}
+.compo7{
+    background-color: #e1cba1; /*dimmer*/
+}
+.compo8{
+    background-color: #ccebf4;
 }
 /* cart */
 .cart{

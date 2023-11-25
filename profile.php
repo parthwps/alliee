@@ -1,7 +1,9 @@
 <?php include("common.php");?>
 <?php include("header.php");?>
-
-
+<?php
+$whereConditions = ["id" => $_SESSION['udetails']];
+$userDetails = selectFromTable("user", ["firstname","lastname"], $whereConditions);
+?>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -13,11 +15,11 @@
                     <form id="updateNameForm">
                         <div class="form-group mb-4">
                             <label for="firstName">First Name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
+                            <input type="text" class="form-control" id="firstName" placeholder="Enter your first name" value="<?php if($userDetails){echo $userDetails['firstname'];}?>">
                         </div>
                         <div class="form-group mb-4">
                             <label for="lastName">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
+                            <input type="text" class="form-control" id="lastName" placeholder="Enter your last name" value="<?php if($userDetails){echo $userDetails['lastname'];}?>">
                         </div>
                         <button type="button" class="btn btn-blue" onclick="updateName()">Update Name</button>
                     </form>
