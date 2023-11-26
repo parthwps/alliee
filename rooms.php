@@ -1,13 +1,16 @@
 <?php include("common.php");?>
 <?php include("header.php");?>
 
-<div class="container select-room d-flex justify-content-between mt-3">
-    <div><h2 class="room-h2">Room</h2>
-    <h5 class="panel-h5">Panel</h5></div>
-    <div class="navbar">
-        <a href="javascript:void(0)" onclick="prevroom()" style="font-size:1.25rem;margin-left:1rem;">< Prev</a>
-        
-        <a href="javascript:void(0)" onclick="nextroom()" style="font-size:1.25rem;margin-left:1rem;">Next ></a>
+<div class="container select-room d-flex align-items-center justify-content-between mt-3">
+    <div class="room-arrows">
+        <a href="javascript:void(0)" onclick="prevroom()" class="room-arrow room-arrow-left"><span><</span> Prev Room</a>
+    </div>
+    <div class="room-titles">
+        <div><h2 class="room-h2 justify-content-center">Room</h2>
+        <h5 class="panel-h5">Panel</h5></div>
+    </div>
+    <div class="room-arrows">
+        <a href="javascript:void(0)" onclick="nextroom()" class="room-arrow room-arrow-right">Next Room <span>></span></a>
     </div>
 </div>
 <div class="container">

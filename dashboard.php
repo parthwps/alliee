@@ -38,6 +38,9 @@ try {
 ?>  
 </div>
 <script>
+$(document).ready(function() {
+    sessionStorage.setItem('currentroom',0);
+});
 $('.room-check-box').on('change', function() {
     var checkedItems = [];
     var rooms = [];
@@ -51,13 +54,12 @@ $('.room-check-box').on('change', function() {
         }
     });
 
-    localStorage.setItem('checkedItems', JSON.stringify(checkedItems));
-    var checkedItems = localStorage.getItem('checkedItems');
+    sessionStorage.setItem('checkedItems', JSON.stringify(checkedItems));
+    var checkedItems = sessionStorage.getItem('checkedItems');
 
-    localStorage.setItem('rooms', JSON.stringify(rooms));
-    var rooms = localStorage.getItem('rooms');
+    sessionStorage.setItem('rooms', JSON.stringify(rooms));
+    var rooms = sessionStorage.getItem('rooms');
     updaterooms();
-    
 });
 </script>
 <?php include("footer.php");?>

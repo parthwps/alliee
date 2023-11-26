@@ -205,7 +205,27 @@ a:hover{
     color: #111;
 }
 .panel-h5{
-background: #000;
-color: #fff;
-padding: 0.25rem 0.5rem;
+    background: #000;
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+}
+.room-arrows{
+    max-width: 5rem;
+}
+.room-arrow{
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+}
+.room-arrow-left span{
+    margin-right: 1rem;
+}
+.room-arrow-right{
+    text-align: right;
+}
+.room-arrow-right span{
+    margin-left: 1rem;
+}
+.room-arrow:hover{
+    text-decoration: none;
 }

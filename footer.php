@@ -15,10 +15,21 @@ $(document).ajaxStop(function() {
     $("#ajax-progress").hide();
 });
 $(document).ready(function() {
-  console.log(localStorage.getItem('currentroom'));
-  var storedRooms = localStorage.getItem('allRooms');
-  var storedPanels = localStorage.getItem('allPanels');
-  var checkedItems = JSON.parse(localStorage.getItem('checkedItems'));
+  var currentroom = parseInt(sessionStorage.getItem('currentroom'), 10) || 0;
+  console.log("Current Room: " + currentroom);
+  if(currentroom == null){
+    sessionStorage.setItem('currentroom',0);
+  }
+
+  var nextroom = currentroom + 1;
+  var checkedItems = JSON.parse(sessionStorage.getItem('checkedItems'));
+
+
+
+
+  var storedRooms = sessionStorage.getItem('allRooms');
+  var storedPanels = sessionStorage.getItem('allPanels');
+  var checkedItems = JSON.parse(sessionStorage.getItem('checkedItems'));
   console.log(checkedItems.length);
   $.ajax({
       type: "GET",
@@ -28,7 +39,7 @@ $(document).ready(function() {
       success: function(response) {
           if (response.success) {
               if (storedRooms === null) {
-                  localStorage.setItem('allRooms', JSON.stringify(response.rooms));
+                  sessionStorage.setItem('allRooms', JSON.stringify(response.rooms));
               }
               updaterooms();
           } else {
@@ -47,7 +58,7 @@ $(document).ready(function() {
       success: function(response) {
           if (response.success) {
               if (storedPanels === null) {
-                  localStorage.setItem('allPanels', JSON.stringify(response.panels));
+                  sessionStorage.setItem('allPanels', JSON.stringify(response.panels));
               }
 
               updaterooms();
@@ -60,7 +71,7 @@ $(document).ready(function() {
       }
   });
   
-  var storedItems = localStorage.getItem('checkedItems');
+  var storedItems = sessionStorage.getItem('checkedItems');
   if (storedItems) {
       storedItems = JSON.parse(storedItems);
       storedItems.forEach(function(item) {
@@ -69,8 +80,8 @@ $(document).ready(function() {
   }
 });
 function updaterooms(){
-  var rooms = JSON.parse(localStorage.getItem('rooms'));
-  var allRooms = JSON.parse(localStorage.getItem('allRooms'));
+  var rooms = JSON.parse(sessionStorage.getItem('rooms'));
+  var allRooms = JSON.parse(sessionStorage.getItem('allRooms'));
   var roomsContainer = $('#roomsContainer');
   roomsContainer.empty(); 
   rooms.forEach(function(roomId) {
@@ -83,33 +94,34 @@ function updaterooms(){
   });
 }
 function prevroom(){
-  var currentroom = parseInt(localStorage.getItem('currentroom'), 10) || 0;
+  var currentroom = parseInt(sessionStorage.getItem('currentroom'), 10) || 0;
   var prevroom = currentroom - 1;
-  if(currentroom !== 1){
-    localStorage.setItem('currentroom', prevroom);
+  if(currentroom !== 0){
+    sessionStorage.setItem('currentroom', prevroom);
     location.reload();
   }
 }
 function nextroom(){
-  var currentroom = parseInt(localStorage.getItem('currentroom'), 10) || 0;
+  var currentroom = parseInt(sessionStorage.getItem('currentroom'), 10) || 0;
   var nextroom = currentroom + 1;
-  localStorage.setItem('currentroom', nextroom);
+  var checkedItems = JSON.parse(sessionStorage.getItem('checkedItems'));
+  if(currentroom < checkedItems.length-1){
+  sessionStorage.setItem('currentroom', nextroom);
   location.reload();
-  var checkedItems = JSON.parse(localStorage.getItem('checkedItems'));
-  console.log(checkedItems.length);
+  }
 }
 function roomsphp(){
-  var storedItems = localStorage.getItem('checkedItems');
+  var storedItems = sessionStorage.getItem('checkedItems');
   if (storedItems) {
     storedItems = JSON.parse(storedItems);
     if(storedItems.length !== 0){   
-      if(localStorage.getItem('currentroom') == null){
+      if(sessionStorage.getItem('currentroom') == null){
         // console.log(storedItems[0]);
-        localStorage.setItem('currentroom', 0);
+        sessionStorage.setItem('currentroom', 0);
       }
-      var currentroom = localStorage.getItem('currentroom');
-      var allrooms = JSON.parse(localStorage.getItem('allRooms'));
-      var allpanels = JSON.parse(localStorage.getItem('allPanels'));
+      var currentroom = sessionStorage.getItem('currentroom');
+      var allrooms = JSON.parse(sessionStorage.getItem('allRooms'));
+      var allpanels = JSON.parse(sessionStorage.getItem('allPanels'));
       // console.log(allpanels);
       allrooms.forEach(function(room){
         if(room.id == storedItems[currentroom].r){
