@@ -6,7 +6,7 @@
         <a href="javascript:void(0)" onclick="prevroom()" class="room-arrow room-arrow-left"><span><</span> Prev Room</a>
     </div>
     <div class="room-titles">
-        <div><h2 class="room-h2 justify-content-center">Room</h2>
+        <div><h2 class="h1 room-h2 justify-content-center">Room</h2>
         <h5 class="panel-h5">Panel</h5></div>
     </div>
     <div class="room-arrows">

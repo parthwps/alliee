@@ -2,7 +2,7 @@
 <?php include("header.php");?>
 <?php
 $whereConditions = ["id" => $_SESSION['udetails']];
-$userDetails = selectFromTable("user", ["firstname","lastname"], $whereConditions);
+$userDetails = selectFromTable("user", ["firstname","lastname","mobile"], $whereConditions);
 ?>
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -21,7 +21,11 @@ $userDetails = selectFromTable("user", ["firstname","lastname"], $whereCondition
                             <label for="lastName">Last Name</label>
                             <input type="text" class="form-control" id="lastName" placeholder="Enter your last name" value="<?php if($userDetails){echo $userDetails['lastname'];}?>">
                         </div>
-                        <button type="button" class="btn btn-blue" onclick="updateName()">Update Name</button>
+                        <div class="form-group mb-4">
+                            <label for="lastName">Mobile</label>
+                            <input type="text" class="form-control" id="mobile" placeholder="Mobile No." value="<?php if($userDetails){echo $userDetails['mobile'];}?>" disabled>
+                        </div>
+                        <button type="button" class="btn btn-blue" onclick="updateName()">Update</button>
                     </form>
                 </div>
             </div>
