@@ -40,8 +40,7 @@ try {
 <script>
 $(document).ready(function() {
     sessionStorage.setItem('currentroom',0);
-});
-$('.room-check-box').on('change', function() {
+    $('.room-check-box').on('change', function() {
     var checkedItems = [];
     var rooms = [];
 
@@ -53,13 +52,14 @@ $('.room-check-box').on('change', function() {
             rooms.push(roomId);
         }
     });
-
+    console.log(checkedItems);
     sessionStorage.setItem('checkedItems', JSON.stringify(checkedItems));
     var checkedItems = sessionStorage.getItem('checkedItems');
 
     sessionStorage.setItem('rooms', JSON.stringify(rooms));
     var rooms = sessionStorage.getItem('rooms');
     updaterooms();
+});
 });
 </script>
 <?php include("footer.php");?>

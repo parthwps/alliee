@@ -1,6 +1,6 @@
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid mx-3">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="./">
       <img src="assets/img/logo.png" alt="Bootstrap" class="logo">
     </a>
 

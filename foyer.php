@@ -75,6 +75,9 @@
 
 <script>
 $(document).ready(function() {
+    if(currentroom == null){
+    sessionStorage.setItem('currentroom',0);
+  }
     const checkedCounts = {}; // Create an object to store the checked counts
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     let lastCheckedIndex = 0;
