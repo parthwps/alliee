@@ -3,7 +3,7 @@
 
 <div class="container select-room d-flex justify-content-between mt-3">
     <h2>Select Room</h2>
-    <div class="navbar">
+    <div class="navbar navbar-dnav">
         <button class="navbar-toggler" type="button" data-toggle="tooltip" data-placement="left" title="Selected Rooms" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -11,9 +11,7 @@
     </div>
 </div>
 <div class="container main room" style="background-color:#f2f2f2;">
-
     <div class="row room-select">
-
 <?php
 require("connect.php");
 
@@ -39,6 +37,11 @@ try {
 </div>
 <script>
 $(document).ready(function() {
+    var checkedItems2 = JSON.parse(sessionStorage.getItem('checkedItems'));
+    console.log(checkedItems2);
+    if(checkedItems2 == null || checkedItems2 == 0){
+        $('.navbar-dnav').css("display","none");
+    }
     sessionStorage.setItem('currentroom',0);
     $('.room-check-box').on('change', function() {
     var checkedItems = [];
@@ -52,7 +55,11 @@ $(document).ready(function() {
             rooms.push(roomId);
         }
     });
-    console.log(checkedItems);
+    if(checkedItems == null || checkedItems == 0){
+        $('.navbar-dnav').css("display","none");
+    }else{
+        $('.navbar-dnav').css("display","flex");
+    }
     sessionStorage.setItem('checkedItems', JSON.stringify(checkedItems));
     var checkedItems = sessionStorage.getItem('checkedItems');
 

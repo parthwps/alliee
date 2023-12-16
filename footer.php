@@ -124,7 +124,6 @@ function roomsphp(){
             document.querySelector(".room-h2").innerHTML = room.name;
         }
       });
-      console.log("got");
       allpanels.forEach(function(panel){
         if(panel.id == storedItems[currentroom].p){
           document.querySelector(".panel-h5").innerHTML = panel.panel;

@@ -18,32 +18,40 @@
 
     </div>
 </div>
-
+<style>
+  .cart-title{
+    display:flex;
+  }
+  .cart-title button{
+    margin-left:auto;
+  }
+</style>
 <div class="cart position-fixed" style="bottom:0">
-    <div class="container pb-2">
-        <h6 class="mt-3">Total Things required in <b class="totalcount">0</b></h6>
-        <div class="row totals">
+    <div class="container">
+        <div class="cart-title m-1">
+          <h6>Total&nbsp;<b class="totalcount">0</b></h6>
+          <button class="btn btn-blue">Show Suggestions</button>
+        </div>
+        <div class="row totals my-2">
 
         </div>
     </div>
+    <!-- <div class="text-center suggestion-box">
+      <button class="btn btn-blue">Show Suggestions</button>
+    </div> -->
 </div>
 <script>
     $(document).ready(function() {
         roomsphp();
         $('.compo').each(function () {
-            // Get the class of the current .compo element
             var compoClass = $(this).attr('class').split(' ')[1];
 
-            // Create a new col element with initial count set to 0
             var newColElement = $('<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 ' + compoClass + '">' +
             compoClass.charAt(0).toUpperCase() + compoClass.slice(1) + ': <span class="' + compoClass + 'count">0</span>' +
             '</div>');
-
-            // Append the new col element to the totals row
             $('.totals').append(newColElement);
         });
 
-        // Attach the change event handler to dynamically loaded content
         $(document).on('change', '.compo input[type="checkbox"]', handleCheckboxChange);
     });
 function handleCheckboxChange() {
@@ -54,7 +62,6 @@ function handleCheckboxChange() {
 
 function updateOrCreateCol(compoClass, checkedCount) {
   var colElement = $('.totals .col.' + compoClass);
-
   if (colElement.length > 0) {
     colElement.find('span').text(checkedCount);
   } else {
@@ -62,6 +69,12 @@ function updateOrCreateCol(compoClass, checkedCount) {
     var newColElement = $('<div class="col ' + compoClass + '">' + title + ': <span class="' + compoClass + 'count">' + checkedCount + '</span>' + '</div>');
     $('.totals').append(newColElement);
   }
+
+//check uncheck checkbox
+var currentroom = parseInt(sessionStorage.getItem('currentroom'), 10) || 0;
+var curroom = currentroom;
+var component = compoClass.replace("compo","");
+var checkboxid = checkedCount;
 
   // Update total count
   var totalElement = $('.totalcount');
@@ -71,7 +84,6 @@ function updateOrCreateCol(compoClass, checkedCount) {
   $('.compo input[type="checkbox"]:checked').each(function () {
     total += 1; // You can modify this logic based on your checkbox value or requirement
   });
-
   totalElement.text(total);
 }
 
