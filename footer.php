@@ -72,6 +72,7 @@ $(document).ready(function() {
           $('#' + item.p).prop('checked', true);
       });
   }
+  
 });
 function updaterooms(){
   var rooms = JSON.parse(sessionStorage.getItem('rooms'));

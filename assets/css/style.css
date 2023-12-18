@@ -126,6 +126,10 @@ a:hover{
     border: 1px solid #DDD;
     border-top: none;
 }
+.suggestions{
+    min-height: 100vh;
+    display: none;
+}
 .select-room h2{
     display: flex;
     align-self: center;
@@ -206,10 +210,17 @@ a:hover{
 .cart h6 b{
     color: #111;
 }
+.cart-title{
+    display:flex;
+}
+.cart-title button{
+margin-left:auto;
+}
 .panel-h5{
     background: #000;
     color: #fff;
     padding: 0.25rem 0.5rem;
+    text-align: center;
 }
 .room-arrows{
     max-width: 5rem;
