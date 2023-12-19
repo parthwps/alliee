@@ -1,7 +1,7 @@
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid mx-3">
     <a class="navbar-brand" href="./">
-      <img src="assets/img/logo.png" alt="Bootstrap" class="logo">
+      <img src="assets/img/logo.svg" alt="Bootstrap" class="logo">
     </a>
 
     <a href="dashboard.php">

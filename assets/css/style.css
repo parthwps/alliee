@@ -223,12 +223,15 @@ margin-left:auto;
     text-align: center;
 }
 .room-arrows{
-    max-width: 5rem;
+    max-width: 6.5rem;
 }
 .room-arrow{
     font-size: 1rem;
     display: flex;
     align-items: center;
+    color: #fff;
+    padding: .5rem 1rem;
+    background: #36356d;
 }
 .room-arrow-left span{
     margin-right: 1rem;
@@ -238,6 +241,9 @@ margin-left:auto;
 }
 .room-arrow-right span{
     margin-left: 1rem;
+    /* color: #fff;
+    padding: 1rem 0.5rem;
+    background: #36356d; */
 }
 .room-arrow:hover{
     text-decoration: none;

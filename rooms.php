@@ -30,7 +30,7 @@
     <div class="container">
         <div class="cart-title m-1">
           <h6>Total&nbsp;<b class="totalcount">0</b></h6>
-          <button class="btn btn-blue show-suggestion">Show Suggestions</button>
+          <button class="btn btn-blue-dark show-suggestion">Show Suggestions</button>
         </div>
         <div class="row totals my-2">
 
