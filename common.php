@@ -12,7 +12,7 @@ session_start();
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <link href="assets/css/style.css" rel="stylesheet">
-  <link rel="icon" href="assets/img/logo.png" type="image/png">
+  <link rel="icon" href="assets/img/favicon.png" type="image/png">
 </head>
 <?php include('functions.php');?>
 <body>
