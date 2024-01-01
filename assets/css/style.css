@@ -192,6 +192,10 @@ a:hover{
 .compo8{
     background-color: #ccebf4;
 }
+.compo>h3>span{
+    font-size: 14px;
+    margin-left:10px;
+}
 /* cart */
 .cart{
     background-color: #fff;

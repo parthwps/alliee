@@ -65,7 +65,8 @@ $(document).ready(function() {
     }, 500);
 
     $(document).on('change', '.compo input[type="checkbox"]', handleCheckboxChange);
-    $(document).on('click', '.show-suggestion', gensugg);//suggestions
+    $(document).on('click', '.show-suggestion', gensugg);
+
 });
 function gensugg(){
 
@@ -105,6 +106,17 @@ function gensugg(){
 
 }
 function handleCheckboxChange() {
+
+
+
+  var compoContainer = $(this).closest('.compo');
+  var maxAllowed = parseInt(compoContainer.data('max'));
+  var checkedCheckboxes = compoContainer.find('.al-room-check:checked');
+  if (checkedCheckboxes.length > maxAllowed) {
+    $(this).prop('checked', false);
+    alert('Maximum ' + maxAllowed + ' checkboxes allowed.');
+  }else{
+  
   var checkboxIndicesMap = JSON.parse(sessionStorage.getItem('checkboxIndicesMap')) || {};
 
   var compoClass = $(this).closest('.compo').attr('class').split(' ')[1];
@@ -124,6 +136,7 @@ function handleCheckboxChange() {
   sessionStorage.setItem('checkboxIndicesMap', JSON.stringify(checkboxIndicesMap));
   console.log('Checkbox indices map:', checkboxIndicesMap);
   updateOrCreateCol(compoClass, checkedCount); 
+  }
 }
 function updateOrCreateCol(compoClass, checkedCount) {
   var colElement = $('.totals .col.' + compoClass);
