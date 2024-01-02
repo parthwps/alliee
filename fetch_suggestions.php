@@ -35,7 +35,9 @@ foreach ($allowedKeys as $allowedKey) {
 }
 $conditionsString1 = implode(" AND ", $conditions1);
 try {
-    $stmt = $pdo->prepare("SELECT * FROM panel_sugg WHERE ($conditionsString) AND ($conditionsString1)");
+    $query = "SELECT * FROM panel_sugg WHERE ($conditionsString) AND ($conditionsString1)";
+    $stmt = $pdo->prepare($query);
+    echo $query;
 // echo "SELECT * FROM panel_sugg WHERE ($conditionsString) AND ($conditionsString1)";
     // Bind the values to the placeholders
     foreach ($allowedKeys as $allowedKey) {
