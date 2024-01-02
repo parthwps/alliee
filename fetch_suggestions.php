@@ -3,7 +3,7 @@ require("connect.php");
 
 // Assuming $_POST["data"] is an array containing key-value pairs
 $data = $_POST["data"];
-echo $data;
+print_r($data);
 // Define a list of keys
 $allowedKeys = array(
     'switch',
