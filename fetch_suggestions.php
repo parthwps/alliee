@@ -1,7 +1,9 @@
 <?php
 require("connect.php");
 
+// Assuming $_POST["data"] is an array containing key-value pairs
 $data = $_GET["data"];
+// Define a list of keys
 $allowedKeys = array(
     'switch',
     'hl_switch',
@@ -32,13 +34,11 @@ $conditionsString1 = implode(" AND ", $conditions1);
 try {
     $query = "SELECT * FROM panel_sugg WHERE ($conditionsString) AND ($conditionsString1)";
     $stmt = $pdo->prepare($query);
-    echo $query;
     foreach ($allowedKeys as $allowedKey) {
         if (array_key_exists($allowedKey, $data)) {
             $stmt->bindValue(":$allowedKey", $data[$allowedKey]);
         }
     }
-    echo "tood";
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($result);
