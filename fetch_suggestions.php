@@ -51,4 +51,5 @@ try {
 } catch (PDOException $e) {
     echo "Query failed: " . $e->getMessage();
 }
+echo "test";
 ?>
