@@ -88,7 +88,7 @@ function gensugg(){
   document.getElementsByClassName('suggestions')[0].scrollIntoView();
   $.ajax({
       url: 'fetch_suggestions.php',
-      type: 'GET',
+      type: 'POST',
       data: {data: requestData},
       dataType: 'json',
       success: function(data) {
