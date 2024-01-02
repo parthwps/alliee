@@ -3,7 +3,7 @@ require("connect.php");
 
 // Assuming $_POST["data"] is an array containing key-value pairs
 $data = $_POST["data"];
-
+echo $data;
 // Define a list of keys
 $allowedKeys = array(
     'switch',
@@ -51,5 +51,4 @@ try {
 } catch (PDOException $e) {
     echo "Query failed: " . $e->getMessage();
 }
-echo "test";
 ?>

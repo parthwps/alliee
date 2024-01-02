@@ -89,8 +89,8 @@ function gensugg(){
   $.ajax({
       url: 'fetch_suggestions.php',
       type: 'POST',
-      data: {data: requestData},
       dataType: 'json',
+      data: {data: requestData},
       success: function(data) {
         console.log(data);
         var suggestionsContent = '';
