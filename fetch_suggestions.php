@@ -43,7 +43,7 @@ try {
             $stmt->bindValue(":$allowedKey", $data[$allowedKey]);
         }
     }
-
+    echo "tood";
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($result);
