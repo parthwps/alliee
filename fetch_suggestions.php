@@ -44,7 +44,12 @@ try {
     //         $stmt->bindValue(":$allowedKey", $data[$allowedKey]);
     //     }
     // }
-    $stmt->execute();
+
+    if($stmt->execute()){
+        echo "good";
+    }else{
+        echo "not good";
+    }
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($result);
 } catch (PDOException $e) {
