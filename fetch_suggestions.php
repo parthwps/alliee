@@ -49,6 +49,7 @@ try {
     echo json_encode($result);
 } catch (PDOException $e) {
     echo "Query failed: " . $e->getMessage();
+    echo "test";
 }
 ?>
 </body>
