@@ -20,14 +20,13 @@ $conditions = array();
 $conditions1 = array();
 
 foreach ($allowedKeys as $allowedKey) {
-    if (array_key_exists($allowedKey, $data)) {
+    if (isset($data[$allowedKey])) {
         $conditions[] = "$allowedKey = :$allowedKey";
     }
 }
 $conditionsString = implode(" OR ", $conditions);
 foreach ($allowedKeys as $allowedKey) {
-    if (array_key_exists($allowedKey, $data)) {
-    }else{
+    if (!isset($data[$allowedKey])) {
         $conditions1[] = "$allowedKey = 0";
     }
 }
