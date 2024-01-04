@@ -33,13 +33,14 @@ foreach ($allowedKeys as $allowedKey) {
 // print_r($conditions);
 $conditionsString1 = implode(" AND ", $conditions1);
 try {
-    $query = "SELECT * FROM panel_sugg WHERE ($conditionsString) AND ($conditionsString1)";
+    //  WHERE ($conditionsString) AND ($conditionsString1)
+    $query = "SELECT * FROM panel_sugg";
     $stmt = $pdo->prepare($query);
-    foreach ($allowedKeys as $allowedKey) {
-        if (isset($data[$allowedKey])) {
-            $stmt->bindValue(":$allowedKey", $data[$allowedKey]);
-        }
-    }
+    // foreach ($allowedKeys as $allowedKey) {
+    //     if (isset($data[$allowedKey])) {
+    //         $stmt->bindValue(":$allowedKey", $data[$allowedKey]);
+    //     }
+    // }
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($result);
