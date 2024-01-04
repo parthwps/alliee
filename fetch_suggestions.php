@@ -44,7 +44,7 @@ try {
     if ($jsonError !== JSON_ERROR_NONE) {
         throw new Exception("JSON encoding error: " . json_last_error_msg());
     }
-    echo json_encode($result);
+    echo json_encode($result, JSON_UNESCAPED_UNICODE);
 } catch (PDOException $e) {
     echo "Query failed: " . $e->getMessage();
 }
