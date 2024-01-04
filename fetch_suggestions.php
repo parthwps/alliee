@@ -35,7 +35,10 @@ $conditionsString1 = implode(" AND ", $conditions1);
 try {
     //  WHERE ($conditionsString) AND ($conditionsString1)
     $query = "SELECT * FROM panel_sugg";
+    echo $query;
+
     $stmt = $pdo->prepare($query);
+    echo $stmt;
     // foreach ($allowedKeys as $allowedKey) {
     //     if (isset($data[$allowedKey])) {
     //         $stmt->bindValue(":$allowedKey", $data[$allowedKey]);
