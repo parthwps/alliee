@@ -1,9 +1,6 @@
 <?php
 require("connect.php");
-
-// Assuming $_POST["data"] is an array containing key-value pairs
 $data = $_GET["data"];
-// Define a list of keys
 $allowedKeys = array(
     'switch',
     'hl_switch',

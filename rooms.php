@@ -15,7 +15,6 @@
 </div>
 <div class="container mb-5 pb-5">
   <div class="row g-3 room_modules">
-
   </div>
   <div class="row suggestions py-5" id="suggestions">
     <h2>Suggested Touch Panels</h2>
@@ -92,7 +91,7 @@ function gensugg(){
       dataType: 'json',
       data: {data: requestData},
       success: function(data) {
-        console.log(data);
+        console.log(data+"test");
         var suggestionsContent = '';
         data.forEach(function(module){
           suggestionsContent += '<tr><td><input class="form-check-input al-room-check" type="checkbox" id="' + module.id + '" value="'+ module.name +'"></td><td>' + module.name + '</td><td>' + module.module + '</td></tr>';

@@ -1,4 +1,3 @@
-<!-- Progress Bar -->
 <div class="progress" id="ajax-progress" style="display: none;">
     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
@@ -114,7 +113,6 @@ function roomsphp(){
   if (storedItems) {
     if(storedItems.length !== 0){   
       if(sessionStorage.getItem('currentroom') == null){
-        // console.log(storedItems[0]);
         sessionStorage.setItem('currentroom', 0);
       }
       let currentroom = sessionStorage.getItem('currentroom');
@@ -139,7 +137,6 @@ function roomsphp(){
 
         }
       });
-      // console.log(storedItems);
     }else{
       alert("There is no Rooms selected. Select Rooms & Panels");
     }
