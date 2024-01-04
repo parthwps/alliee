@@ -38,7 +38,7 @@ try {
     echo $query;
 
     $stmt = $pdo->prepare($query);
-    echo $stmt;
+    var_dump($stmt);
     // foreach ($allowedKeys as $allowedKey) {
     //     if (isset($data[$allowedKey])) {
     //         $stmt->bindValue(":$allowedKey", $data[$allowedKey]);
