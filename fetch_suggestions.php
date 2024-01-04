@@ -29,20 +29,20 @@ foreach ($allowedKeys as $allowedKey) {
         $conditions1[] = "$allowedKey = 0";
     }
 }
-print_r($conditions);
-// $conditionsString1 = implode(" AND ", $conditions1);
-// try {
-//     $query = "SELECT * FROM panel_sugg WHERE ($conditionsString) AND ($conditionsString1)";
-//     $stmt = $pdo->prepare($query);
-//     foreach ($allowedKeys as $allowedKey) {
-//         if (array_key_exists($allowedKey, $data)) {
-//             $stmt->bindValue(":$allowedKey", $data[$allowedKey]);
-//         }
-//     }
-//     $stmt->execute();
-//     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//     echo json_encode($result);
-// } catch (PDOException $e) {
-//     echo "Query failed: " . $e->getMessage();
-// }
+// print_r($conditions);
+$conditionsString1 = implode(" AND ", $conditions1);
+try {
+    $query = "SELECT * FROM panel_sugg WHERE ($conditionsString) AND ($conditionsString1)";
+    $stmt = $pdo->prepare($query);
+    foreach ($allowedKeys as $allowedKey) {
+        if (array_key_exists($allowedKey, $data)) {
+            $stmt->bindValue(":$allowedKey", $data[$allowedKey]);
+        }
+    }
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($result);
+} catch (PDOException $e) {
+    echo "Query failed: " . $e->getMessage();
+}
 ?>
