@@ -29,7 +29,7 @@ foreach ($allowedKeys as $allowedKey) {
         $conditions1[] = "$allowedKey = 0";
     }
 }
-print($conditions);
+print_r($conditions);
 // $conditionsString1 = implode(" AND ", $conditions1);
 // try {
 //     $query = "SELECT * FROM panel_sugg WHERE ($conditionsString) AND ($conditionsString1)";
