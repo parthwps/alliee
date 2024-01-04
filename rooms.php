@@ -91,15 +91,14 @@ function gensugg(){
       dataType: 'json',
       data: {data: requestData},
       success: function(data) {
-        console.log(data+"test");
         var suggestionsContent = '';
         data.forEach(function(module){
           suggestionsContent += '<tr><td><input class="form-check-input al-room-check" type="checkbox" id="' + module.id + '" value="'+ module.name +'"></td><td>' + module.name + '</td><td>' + module.module + '</td></tr>';
         });
         $('.suggestions_list').append(suggestionsContent.trim());        
       },
-      error: function(error) {
-          console.error('Error fetching data:', error);
+      error: function(xhr, status, error) {
+      console.error('Error fetching data:', xhr + status +error);
       }
   });
 
