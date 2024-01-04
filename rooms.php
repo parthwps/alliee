@@ -93,7 +93,7 @@ function gensugg(){
       success: function(data) {
         var suggestionsContent = '';
         data.forEach(function(module){
-          suggestionsContent += '<tr><td><input class="form-check-input al-room-check" type="checkbox" id="' + module.id + '" value="'+ module.name +'"></td><td>' + module.name + '</td><td>' + module.module + '</td></tr>';
+          suggestionsContent += '<tr><td><input class="form-check-input al-room-check" type="checkbox" id="' + module.id + '" value="'+ module.name +'"></td><td>alliée' + module.name + '</td><td>' + module.module + '</td></tr>';
         });
         $('.suggestions_list').append(suggestionsContent.trim());        
       },
