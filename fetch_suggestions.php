@@ -51,6 +51,7 @@ try {
         echo "not good";
     }
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    var_dump($result);
     echo json_encode($result);
 } catch (PDOException $e) {
     echo "Query failed: " . $e->getMessage();
