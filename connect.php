@@ -14,7 +14,6 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected";
 }
 catch(PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
