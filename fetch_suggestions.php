@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require("connect.php");
+
 $data = $_GET["data"];
 $allowedKeys = array(
     'switch',
@@ -13,29 +14,20 @@ $allowedKeys = array(
     'tunable',
     'curtain'
 );
+
 $conditions = array();
-$conditions1 = array();
 
 foreach ($allowedKeys as $allowedKey) {
-    if (isset($data[$allowedKey])) {
-        $conditions[] = "$allowedKey = :$allowedKey";
+    if (isset($data[$allowedKey]) && $data[$allowedKey] > 0) {
+        $conditions[] = "$allowedKey > 0";
     }
 }
-$conditionsString = implode(" OR ", $conditions);
-foreach ($allowedKeys as $allowedKey) {
-    if (!isset($data[$allowedKey])) {
-        $conditions1[] = "$allowedKey = 0";
-    }
-}
-$conditionsString1 = implode(" AND ", $conditions1);
+
+$conditionsString = implode(" AND ", $conditions);
+
 try {
-    $query = "SELECT * FROM panel_sugg WHERE ($conditionsString) AND ($conditionsString1)";
+    $query = "SELECT * FROM panel_sugg WHERE $conditionsString";
     $stmt = $pdo->prepare($query);
-    foreach ($allowedKeys as $allowedKey) {
-        if (isset($data[$allowedKey])) {
-            $stmt->bindValue(":$allowedKey", $data[$allowedKey]);
-        }
-    }
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -44,6 +36,9 @@ try {
     if ($jsonError !== JSON_ERROR_NONE) {
         throw new Exception("JSON encoding error: " . json_last_error_msg());
     }
+    
+    // Return a JSON response
+    header('Content-Type: application/json');
     echo json_encode($result, JSON_UNESCAPED_UNICODE);
 } catch (PDOException $e) {
     echo "Query failed: " . $e->getMessage();
