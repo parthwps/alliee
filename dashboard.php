@@ -42,31 +42,52 @@ $(document).ready(function() {
     if(checkedItems2 == null || checkedItems2 == 0){
         $('.navbar-dnav').css("display","none");
     }
+
     sessionStorage.setItem('currentroom',0);
     $('.room-check-box').on('change', function() {
     var checkedItems = [];
     var rooms = [];
 
-    $('.room-check-box:checked').each(function() {
-        var roomId = $(this).data('room-id');
-        var panelId = $(this).data('panel-id');
-        checkedItems.push({ r: roomId, p: panelId });
-        if (rooms.indexOf(roomId) === -1) {
-            rooms.push(roomId);
+        $('.room-check-box:checked').each(function() {
+            var roomId = $(this).data('room-id');
+            var panelId = $(this).data('panel-id');
+            checkedItems.push({ r: roomId, p: panelId });
+            if (rooms.indexOf(roomId) === -1) {
+                rooms.push(roomId);
+            }
+        });
+        if(checkedItems == null || checkedItems == 0){
+            $('.navbar-dnav').css("display","none");
+        }else{
+            $('.navbar-dnav').css("display","flex");
         }
-    });
-    if(checkedItems == null || checkedItems == 0){
-        $('.navbar-dnav').css("display","none");
-    }else{
-        $('.navbar-dnav').css("display","flex");
-    }
-    sessionStorage.setItem('checkedItems', JSON.stringify(checkedItems));
-    var checkedItems = sessionStorage.getItem('checkedItems');
+        sessionStorage.setItem('checkedItems', JSON.stringify(checkedItems));
+        var checkedItems = sessionStorage.getItem('checkedItems');
 
-    sessionStorage.setItem('rooms', JSON.stringify(rooms));
-    var rooms = sessionStorage.getItem('rooms');
-    updaterooms();
-});
+        sessionStorage.setItem('rooms', JSON.stringify(rooms));
+        var rooms = sessionStorage.getItem('rooms');
+        updaterooms();
+    });
+    
+    $.ajax({
+      url: 'fetch_suggestions.php',
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) {
+        sessionStorage.setItem('panel_sugg', JSON.stringify(data));
+        console.log(data);
+        // var suggestionsContent = '';
+        // console.log(data);
+        // data.forEach(function(module){
+        //   suggestionsContent += '<tr><td><input class="form-check-input al-room-check" type="checkbox" id="' + module.id + '" value="'+ module.name +'"></td><td>alliée ' + module.name + '</td><td>' + module.module + '</td></tr>';
+        // });
+        // $('.suggestions_list').append(suggestionsContent.trim());        
+      },
+      error: function(xhr, status, error) {
+      console.error('Error fetching data:', xhr + status +error);
+      }
+  });
+
 });
 </script>
 <?php include("footer.php");?>

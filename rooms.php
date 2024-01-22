@@ -18,8 +18,8 @@
   </div>
   <div class="row suggestions py-5" id="suggestions">
     <h2>Suggested Touch Panels</h2>
-    <div>
-      <table class="table table-striped suggestions_list">
+    <div id="datatables">
+      <table>
         <tr><th></th><th>Module</th><th>Module Type</th></tr>
       </table>
     </div>
@@ -71,7 +71,7 @@ function gensugg(){
 
   const checkboxcount = sessionStorage.getItem('checkboxIndicesMap');
   console.log(handleCheckboxChange);
-  $(".suggestions").toggle();
+  $(".suggestions").show();
   var checkboxCounts = {};
   var classes = $('[class*=compo]').map(function() {
       return this.className.match(/\bcompo\d+\b/g);
@@ -87,22 +87,94 @@ function gensugg(){
   });
   console.log(requestData);
   document.getElementsByClassName('suggestions')[0].scrollIntoView();
-  $.ajax({
-      url: 'fetch_suggestions.php',
-      type: 'GET',
-      dataType: 'json',
-      data: {data: requestData},
-      success: function(data) {
-        var suggestionsContent = '';
-        data.forEach(function(module){
-          suggestionsContent += '<tr><td><input class="form-check-input al-room-check" type="checkbox" id="' + module.id + '" value="'+ module.name +'"></td><td>alliée ' + module.name + '</td><td>' + module.module + '</td></tr>';
-        });
-        $('.suggestions_list').append(suggestionsContent.trim());        
-      },
-      error: function(xhr, status, error) {
-      console.error('Error fetching data:', xhr + status +error);
+  let data = JSON.parse(sessionStorage.getItem('panel_sugg'))
+    let filteredData = data.filter(item => {
+      if(requestData.switch !== null){
+        let switchValue = parseInt(item.switch); // 3,4,5,6
+        let condition1;
+        if(requestData.switch == 0 || requestData.switch == 1 || requestData.switch == 2){
+          condition1 = switchValue >= 1 && switchValue <= 4;
+        }
+        if(requestData.switch == 8){
+          condition1 = switchValue >= 7 && switchValue <= 8;
+        }
+        if(requestData.switch == 7){
+          condition1 = switchValue >= 6 && switchValue <= 8;
+        }
+        if(requestData.switch == 6){
+          condition1 = switchValue >= 5 && switchValue <= 8;
+        }
+        if(requestData.switch == 5){
+          condition1 = switchValue >= 4 && switchValue <= 7;
+        }
+        if(requestData.switch == 4){
+          condition1 = switchValue >= 3 && switchValue <= 6;
+        }
+        if(requestData.switch == 3){
+          condition1 = switchValue >= 2 && switchValue <= 5;
+        }
+        return condition1;
       }
+      if(requestData.scenario !== null){
+        let sceneValue = parseInt(item.scenario); // 0,1,2
+        let condition2 = sceneValue >= 1 && sceneValue <= 2;
+        return condition2;
+      }
+      if(requestData.plug !== null){
+        let plugValue = parseInt(item.plug); //0,1,2
+        let condition3 = plugValue >= 1 && plugValue <= 2;
+        return condition3;
+      }
+      if(requestData.curtain !== null){
+        let curtainValue = parseInt(item.curtain); // 1,2
+        let condition4 = curtainValue >= 1 && curtainValue < 2;
+        return condition4;
+      }
+      if(requestData.dimmer !== null){
+        let dimmerValue = parseInt(item.dimmer); // 1,2
+        let condition5 = dimmerValue >= 1 && dimmerValue <= 2;
+        return condition5;
+      }
+      if(requestData.fan !== null){
+        let fanValue = parseInt(item.fan); // 1,2
+        let condition6 = fanValue >= 1 && fanValue <= 2;
+        return condition6;
+      }
+      if(requestData.hl_switch !== null){
+        let hl_switch = parseInt(item.hl_switch); // 1,2
+        let condition7 = hl_switch >= 1 && hl_switch <= 2 ;
+        return condition7;
+      }
+    });
+  // console.log(filteredData);
+  let groupedData = filteredData.reduce((groups, item) => {
+  let key = item.module;
+  groups[key] = groups[key] || [];
+  groups[key].push(item);
+  return groups;
+}, {});
+  Object.keys(groupedData).forEach(module => {
+  let tableHTML = `<table class="table table-striped suggestions_list">
+                    <thead>
+                      <tr>
+                        <th>Select</th>
+                        <th>Touch Panel</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+
+  groupedData[module].forEach(item => {
+    tableHTML += `<tr>
+                    <td><input class="form-check-input al-room-check" type="checkbox" id="' + ${item.id} + '" value="'+ ${item.name} +'"></td>
+                    <td>${item.name}</td>
+                  </tr>`;
   });
+
+  tableHTML += `</tbody></table>`;
+  document.getElementById("datatables").innerHTML = "";
+  document.getElementById("datatables").innerHTML += (`<h4>Module: <b>${module}</b></h4>`);
+  document.getElementById("datatables").innerHTML += tableHTML;
+});
 
 }
 function handleCheckboxChange() {
@@ -113,7 +185,6 @@ function handleCheckboxChange() {
     $(this).prop('checked', false);
     alert('Maximum ' + maxAllowed + ' checkboxes allowed.');
   }else{
-  
   var checkboxIndicesMap = JSON.parse(sessionStorage.getItem('checkboxIndicesMap')) || {};
 
   var compoClass = $(this).closest('.compo').attr('class').split(' ')[1];
