@@ -68,7 +68,7 @@ $(document).ready(function() {
 
 });
 function gensugg(){
-
+  document.getElementById("datatables").innerHTML = "";
   const checkboxcount = sessionStorage.getItem('checkboxIndicesMap');
   console.log(handleCheckboxChange);
   $(".suggestions").show();
@@ -171,7 +171,6 @@ function gensugg(){
   });
 
   tableHTML += `</tbody></table>`;
-  document.getElementById("datatables").innerHTML = "";
   document.getElementById("datatables").innerHTML += (`<h4>Module: <b>${module}</b></h4>`);
   document.getElementById("datatables").innerHTML += tableHTML;
 });
