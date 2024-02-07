@@ -7,9 +7,9 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $password = '';
 } else {
     $host = 'localhost';
-    $dbname = 'charmiel_alliee';
-    $username = 'charmiel_alliee';
-    $password = 'Balaji@1234';
+    $dbname = 'technocr_alliee';
+    $username = 'technocr_alliee';
+    $password = '9H*f?lXv;5vJ';
 }
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);

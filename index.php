@@ -132,12 +132,6 @@ document.getElementById("verifyOtp").addEventListener("click", function() {
       alert("Invalid OTP")
     }
 });
-
-
-
-
-
-
   const mobileInputs = document.querySelectorAll(".mobile-input");
   mobileInputs.forEach(function(input) {
     input.addEventListener("input", function() {
