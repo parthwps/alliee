@@ -1,6 +1,7 @@
 <?php
 session_start();
 require("connect.php");
+
 if (isset($_POST['checkedItems'])) {
     // Retrieve the checked items from the AJAX request and decode the JSON string
     $checkedItems = $_POST['checkedItems'];

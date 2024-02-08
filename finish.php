@@ -1,5 +1,8 @@
 <?php include("common.php");?>
-<?php include("header.php");?>
+<?php include("header.php");
+$whereConditions = ["id" => $_SESSION['udetails']];
+$userDetails = selectFromTable("user", ["firstname","lastname","mobile"], $whereConditions);
+?>
 <style>
     .o_room_h4{
         padding:1rem;
@@ -58,7 +61,22 @@
 </nav>
 <div class="m-5">
     <div class="clientdata mb-5">
-        Name: 
+    <form>
+        <div class="row">
+            <div class="col">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" value="<?php if($userDetails){echo $userDetails['firstname']." ".$userDetails['lastname'];}?>">
+            </div>
+            <div class="col">
+                <label for="mobile" class="form-label">Mobile:</label>
+                <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile number" value="<?php if($userDetails){echo $userDetails['mobile'];}?>">
+            </div>
+            <div class="col">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address" value="">
+            </div>
+        </div>
+    </form>
     </div>
     <h3>Selected Rooms & Panels</h3>
     <div id="content">
