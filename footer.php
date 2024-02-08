@@ -109,7 +109,7 @@ function nextroom(){
 function roomsphp(){
   var storedItems = sessionStorage.getItem('checkedItems');
   storedItems = JSON.parse(storedItems);
-  console.log(storedItems,storedItems.length);
+  console.log("StoredItems Length: ",storedItems,storedItems.length);
   if (storedItems) {
     if(storedItems.length !== 0){   
       if(sessionStorage.getItem('currentroom') == null){
@@ -126,7 +126,7 @@ function roomsphp(){
       allpanels.forEach(function(panel){
         if(panel.id == storedItems[currentroom].p){
           document.querySelector(".panel-h5").innerHTML = panel.panel;
-          console.log(panel.modules);
+          console.log("all panels (?)",panel.modules);
           let numbersArray = panel.modules.split(',');
           let numbers = numbersArray.map(Number);
           for (let i = 0; i < numbers.length; i++) {

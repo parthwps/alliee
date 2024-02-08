@@ -10,7 +10,8 @@
         <h5 class="panel-h5">Panel</h5></div>
     </div>
     <div class="room-arrows">
-        <a href="javascript:void(0)" onclick="nextroom()" class="room-arrow room-arrow-right">Next Room <span>></span></a>
+        <a href="javascript:void(0)" onclick="nextroom()" class="room-arrow room-next room-arrow-right">Next Room <span>></span></a>
+        <a href="finish.php" class="room-arrow room-finish room-arrow-right">Finish <span>></span></a>
     </div>
 </div>
 <div class="container mb-5 pb-5">
@@ -39,6 +40,15 @@
 <script>
 $(document).ready(function() {
     roomsphp();
+    var currentroom = parseInt(sessionStorage.getItem('currentroom'), 10) || 0;
+    var storedItems = JSON.parse(sessionStorage.getItem('checkedItems'));
+    if(storedItems.length == currentroom + 1){
+      $(".room-finish").css("display","flex");
+      $(".room-next").css("display","none");
+    }else{
+      $(".room-finish").css("display","none");
+      $(".room-next").css("display","flex");
+    }
     $('.compo').each(function () {
         var compoClass = $(this).attr('class').split(' ')[1];
         var newColElement = $('<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 ' + compoClass + '">' +
@@ -46,31 +56,64 @@ $(document).ready(function() {
         '</div>');
         $('.totals').append(newColElement);
     });
-
     setTimeout(function() {
-    var checkboxIndicesMap = JSON.parse(sessionStorage.getItem('checkboxIndicesMap')) || {};
-    var currentroom = parseInt(sessionStorage.getItem('currentroom'), 10) || 0;
-
-    Object.keys(checkboxIndicesMap).forEach(function(room) {
-      if(room == currentroom){
-      $(".totalcount").html(checkboxIndicesMap[room].length);
-        checkboxIndicesMap[room].forEach(function(index) {
-            // console.log(index);
-            var checkbox = $('.compo input[type="checkbox"]').eq(index);
-            checkbox.prop('checked', true);
-        });
-      }
-    });
+      var checkboxIndicesMap = JSON.parse(sessionStorage.getItem('checkboxIndicesMap')) || {};
+      Object.keys(checkboxIndicesMap).forEach(function(room) {
+        if(room == currentroom){
+        $(".totalcount").html(checkboxIndicesMap[room].length);
+          checkboxIndicesMap[room].forEach(function(index) {
+              var checkbox = $('.compo input[type="checkbox"]').eq(index);
+              checkbox.prop('checked', true);
+          });
+        }
+      });
     }, 500);
 
     $(document).on('change', '.compo input[type="checkbox"]', handleCheckboxChange);
     $(document).on('click', '.show-suggestion', gensugg);
+    $(document).on('click', '.panel-select', updateSessionStorage);
+    console.log("Selected Panel: ",sessionStorage.getItem("panelselected"));
 
 });
+// Function to update selected panel per room
+function updateSessionStorage() {
+  var panelselected = JSON.parse(sessionStorage.getItem('panelselected')) || {};
+  var currentRoom = parseInt(sessionStorage.getItem('currentroom'), 10) || 0;
+  var index = $(this).attr("id");
+
+  if (!panelselected[currentRoom]) {
+      panelselected[currentRoom] = [];
+  }
+  var indexPosition = panelselected[currentRoom].indexOf(index);
+  if (indexPosition === -1) {
+      panelselected[currentRoom].push(index);
+  } else {
+      panelselected[currentRoom].splice(indexPosition, 1);
+  }
+  sessionStorage.setItem('panelselected', JSON.stringify(panelselected));
+  console.log('Checkbox selected Panel:', panelselected);
+
+}
 function gensugg(){
+
+  setTimeout(function() {
+    var checkboxIndicesMap = JSON.parse(sessionStorage.getItem('panelselected')) || {};
+    var currentroom = parseInt(sessionStorage.getItem('currentroom'), 10) || 0;
+    console.log("Current Room for Panel Selected on load", currentroom);
+    Object.keys(checkboxIndicesMap).forEach(function(room) {
+      if(room == currentroom){
+        checkboxIndicesMap[room].forEach(function(index) {
+            var checkbox = $('#'+index);
+            checkbox.prop('checked', true);
+        });
+      }
+    });
+  }, 500);
+
+
   document.getElementById("datatables").innerHTML = "";
   const checkboxcount = sessionStorage.getItem('checkboxIndicesMap');
-  console.log(handleCheckboxChange);
+  // console.log("handleCheckboxChange",handleCheckboxChange);
   $(".suggestions").show();
   var checkboxCounts = {};
   var classes = $('[class*=compo]').map(function() {
@@ -85,7 +128,7 @@ function gensugg(){
       var variable_name = $("."+checkboxClass).attr('data-title');
       requestData[variable_name] = variable_value;
   });
-  console.log(requestData);
+  console.log("requestData 124:",requestData);
   document.getElementsByClassName('suggestions')[0].scrollIntoView();
   let data = JSON.parse(sessionStorage.getItem('panel_sugg'))
     let filteredData = data.filter(item => {
@@ -146,7 +189,6 @@ function gensugg(){
         return condition7;
       }
     });
-  // console.log(filteredData);
   let groupedData = filteredData.reduce((groups, item) => {
   let key = item.module;
   groups[key] = groups[key] || [];
@@ -165,7 +207,7 @@ function gensugg(){
 
   groupedData[module].forEach(item => {
     tableHTML += `<tr>
-                    <td><input class="form-check-input al-room-check" type="checkbox" id="' + ${item.id} + '" value="'+ ${item.name} +'"></td>
+                    <td><input class="form-check-input al-room-check panel-select" type="checkbox" id="${item.id}" value="${item.name}"></td>
                     <td>${item.name}</td>
                   </tr>`;
   });
@@ -176,6 +218,7 @@ function gensugg(){
 });
 
 }
+
 function handleCheckboxChange() {
   var compoContainer = $(this).closest('.compo');
   var maxAllowed = parseInt(compoContainer.data('max'));
