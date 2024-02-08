@@ -134,20 +134,20 @@ $(document).ready(function() {
         var canvasImageHeight = contentHeight;
         var totalPDFPages = Math.ceil(contentHeight/pdfHeight)-1;
 
-// Show progress bar
-var progressBar = $('#progress_bar');
-progressBar.show();
+        // Show progress bar
+        var progressBar = $('#progress_bar');
+        progressBar.show();
 
-// Update progress bar
-var progress = 0;
-var progressInterval = setInterval(function() {
-    progress += 5; // Increment progress by 5%
-    if (progress <= 100) {
-        $('.progress-bar').css('width', progress + '%').attr('aria-valuenow', progress);
-    } else {
-        clearInterval(progressInterval); // Stop progress interval
-    }
-}, 500);
+        // Update progress bar
+        var progress = 0;
+        var progressInterval = setInterval(function() {
+            progress += 5; // Increment progress by 5%
+            if (progress <= 100) {
+                $('.progress-bar').css('width', progress + '%').attr('aria-valuenow', progress);
+            } else {
+                clearInterval(progressInterval); // Stop progress interval
+            }
+        }, 500);
 
         html2canvas($(domElement)[0],{allowTaint:true}).then(function(canvas) {
             canvas.getContext('2d');
@@ -165,7 +165,24 @@ var progressInterval = setInterval(function() {
     }
 
     $('#invoice_download_btn').click(function () {
-        CreatePDFfromHTML("#invoice_wrapper");
+
+        var name = $('#name').val();
+        var mobile = $('#mobile').val();
+        var email = $('#email').val();
+
+        if (name && mobile && email) {
+          if (/^[0-9]{10}$/.test(mobile)) {
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                CreatePDFfromHTML("#invoice_wrapper");
+            } else {
+              alert("Invalid email address.");
+            }
+          } else {
+            alert("Invalid mobile number.");
+          }
+        } else {
+          alert("Name, Mobile, or Email field is missing.");
+        }
     });
 </script>
 </body>
