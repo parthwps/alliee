@@ -16,16 +16,16 @@
         margin:0;
     }
     .o_room_sugg_title{
-        padding: 1rem;
-        margin:0;
-    }
-    .o_room_sugg{
-        padding:1rem;
+        padding:1rem 0;
         margin:0;
     }
     .table-div{
         padding:1rem;
+        margin: 1rem 0;
         border:1px solid #ccc;
+    }
+    .table-div table{
+        margin:0;
     }
 </style>
 <div class="container select-room d-flex align-items-center justify-content-between mt-3">
@@ -56,8 +56,10 @@
     Email: email@gmail.com | Mo. 99 999 88888
   </div>
 </nav>
-
 <div class="m-5">
+    <div class="clientdata mb-5">
+        Name: 
+    </div>
     <h3>Selected Rooms & Panels</h3>
     <div id="content">
 
