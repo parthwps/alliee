@@ -1,5 +1,33 @@
 <?php include("common.php");?>
 <?php include("header.php");?>
+<style>
+    .o_room_h4{
+        padding:1rem;
+        margin:0;
+        background:#eee;
+    }
+    .o_room_panel{
+        padding:.25rem 1rem;
+        margin:0;
+        font-size: 1rem;
+    }
+    .o_room_panel h5{
+        padding: 1rem;
+        margin:0;
+    }
+    .o_room_sugg_title{
+        padding: 1rem;
+        margin:0;
+    }
+    .o_room_sugg{
+        padding:1rem;
+        margin:0;
+    }
+    .table-div{
+        padding:1rem;
+        border:1px solid #ccc;
+    }
+</style>
 <div class="container select-room d-flex align-items-center justify-content-between mt-3">
     <div class="room-arrows">
         <a href="rooms.php" class="room-arrow room-arrow-left"><span><</span> Back</a>
@@ -25,14 +53,16 @@
     <a class="navbar-brand" href="./">
       <img src="assets/img/logo.svg" alt="Bootstrap" class="logo">
     </a>
-    
+    Email: email@gmail.com | Mo. 99 999 88888
   </div>
 </nav>
+
 <div class="m-5">
-    <h3>Selected Room: </h3>
+    <h3>Selected Rooms & Panels</h3>
+    <div id="content">
+
+    </div>
 </div>
-
-
         </div>
     </div>
 </div>
@@ -44,8 +74,29 @@
 
 
 $(document).ready(function() {
-    console.log("Selected Panel: ", JSON.parse(sessionStorage.getItem("panelselected")));
-    console.log(JSON.parse(sessionStorage.getItem('checkedItems')));
+    var panelselected = JSON.parse(sessionStorage.getItem("panelselected"));
+    var checkedItems = JSON.parse(sessionStorage.getItem('checkedItems'));
+    
+    console.log(panelselected);
+    console.log(checkedItems);
+
+    $.ajax({
+        url: 'output.php',
+        type: 'POST',
+        data: {
+            panelselected: panelselected,
+            checkedItems: checkedItems,
+        },
+        dataType: 'text',
+        success: function(response) {
+            // Handle successful response
+            $("#content").html(response);
+        },
+        error: function(xhr, status, error) {
+        // Handle error
+            console.error("AJAX Error:", xhr.status, error);
+        }
+    });
 
 });
     /**
