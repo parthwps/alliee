@@ -47,42 +47,38 @@ $userDetails = selectFromTable("user", ["firstname","lastname","mobile"], $where
 <div class="progress" id="progress_bar" style="display: none;">
     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
 </div>
-<div class="container">
+<div class="container invoice_main">
     <div id="invoice_wrapper">
         <div class="container-fluid py-3">
-
-<nav class="navbar bg-body-tertiary">
-  <div class="container-fluid mx-3">
-    <a class="navbar-brand" href="./">
-      <img src="assets/img/logo.svg" alt="Bootstrap" class="logo">
-    </a>
-    Email: email@gmail.com | Mo. 99 999 88888
-  </div>
-</nav>
-<div class="m-5">
-    <div class="clientdata mb-5">
-    <form>
-        <div class="row">
-            <div class="col">
-                <label for="name" class="form-label">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" value="<?php if($userDetails){echo $userDetails['firstname']." ".$userDetails['lastname'];}?>">
+            <nav class="navbar bg-body-tertiary">
+                <div class="container-fluid mx-3">
+                    <a class="navbar-brand" href="./"><img src="assets/img/logo.svg" alt="Bootstrap" class="logo"></a>
+                    Email: email@gmail.com | Mo. 99 999 88888
+                </div>
+            </nav>
+            <div class="m-5">
+                <div class="clientdata mb-5">
+                    <form>
+                        <div class="row">
+                            <div class="col">
+                                <label for="name" class="form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" value="<?php if($userDetails){echo $userDetails['firstname']." ".$userDetails['lastname'];}?>">
+                            </div>
+                            <div class="col">
+                                <label for="mobile" class="form-label">Mobile:</label>
+                                <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile number" value="<?php if($userDetails){echo $userDetails['mobile'];}?>">
+                            </div>
+                            <div class="col">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address" value="">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <h3>Selected Rooms & Panels</h3>
+                <div id="content">
+                </div>
             </div>
-            <div class="col">
-                <label for="mobile" class="form-label">Mobile:</label>
-                <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile number" value="<?php if($userDetails){echo $userDetails['mobile'];}?>">
-            </div>
-            <div class="col">
-                <label for="email" class="form-label">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address" value="">
-            </div>
-        </div>
-    </form>
-    </div>
-    <h3>Selected Rooms & Panels</h3>
-    <div id="content">
-
-    </div>
-</div>
         </div>
     </div>
 </div>
@@ -158,7 +154,7 @@ $(document).ready(function() {
                 pdf.addPage(pdfWidth, pdfHeight);
                 pdf.addImage(imgData, 'JPG', topTeftMargin, -(pdfHeight*i)+(topTeftMargin*4),canvasImageWidth,canvasImageHeight);
             }
-            pdf.save("html-to-pdf.pdf");
+            pdf.save("alliee-products.pdf");
             // Hide progress bar after PDF generation
             progressBar.hide();
         });

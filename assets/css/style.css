@@ -259,3 +259,19 @@ margin-left:auto;
     width: 100%;
     height: 5px;
 }
+.suggestions_list table tr td:first-child {
+    width: 50px !important;
+    padding-left: 10px !important;
+}
+.suggestions_list table tr:nth-child(odd) {
+    background-color: #f4f4f4 !important;
+}
+.suggestions_list table tr{
+    height: 50px !important;
+}
+.invoice_main{
+    overflow: scroll;
+}
+#invoice_wrapper{
+    width: 1080px;
+}

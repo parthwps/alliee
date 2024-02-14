@@ -19,10 +19,8 @@
   </div>
   <div class="row suggestions py-5" id="suggestions">
     <h2>Suggested Touch Panels</h2>
-    <div id="datatables">
-      <table>
-        <tr><th></th><th>Module</th><th>Module Type</th></tr>
-      </table>
+    <div class="suggestions_list">
+
     </div>
   </div>
 </div>
@@ -111,7 +109,7 @@ function gensugg(){
   }, 500);
 
 
-  document.getElementById("datatables").innerHTML = "";
+  $('.suggestions_list').html("");
   const checkboxcount = sessionStorage.getItem('checkboxIndicesMap');
   // console.log("handleCheckboxChange",handleCheckboxChange);
   $(".suggestions").show();
@@ -130,92 +128,68 @@ function gensugg(){
   });
   console.log("requestData 124:",requestData);
   document.getElementsByClassName('suggestions')[0].scrollIntoView();
-  let data = JSON.parse(sessionStorage.getItem('panel_sugg'))
-    let filteredData = data.filter(item => {
-      if(requestData.switch !== null){
-        let switchValue = parseInt(item.switch); // 3,4,5,6
-        let condition1;
-        if(requestData.switch == 0 || requestData.switch == 1 || requestData.switch == 2){
-          condition1 = switchValue >= 1 && switchValue <= 4;
-        }
-        if(requestData.switch == 8){
-          condition1 = switchValue >= 7 && switchValue <= 8;
-        }
-        if(requestData.switch == 7){
-          condition1 = switchValue >= 6 && switchValue <= 8;
-        }
-        if(requestData.switch == 6){
-          condition1 = switchValue >= 5 && switchValue <= 8;
-        }
-        if(requestData.switch == 5){
-          condition1 = switchValue >= 4 && switchValue <= 7;
-        }
-        if(requestData.switch == 4){
-          condition1 = switchValue >= 3 && switchValue <= 6;
-        }
-        if(requestData.switch == 3){
-          condition1 = switchValue >= 2 && switchValue <= 5;
-        }
-        return condition1;
-      }
-      if(requestData.scenario !== null){
-        let sceneValue = parseInt(item.scenario); // 0,1,2
-        let condition2 = sceneValue >= 1 && sceneValue <= 2;
-        return condition2;
-      }
-      if(requestData.plug !== null){
-        let plugValue = parseInt(item.plug); //0,1,2
-        let condition3 = plugValue >= 1 && plugValue <= 2;
-        return condition3;
-      }
-      if(requestData.curtain !== null){
-        let curtainValue = parseInt(item.curtain); // 1,2
-        let condition4 = curtainValue >= 1 && curtainValue < 2;
-        return condition4;
-      }
-      if(requestData.dimmer !== null){
-        let dimmerValue = parseInt(item.dimmer); // 1,2
-        let condition5 = dimmerValue >= 1 && dimmerValue <= 2;
-        return condition5;
-      }
-      if(requestData.fan !== null){
-        let fanValue = parseInt(item.fan); // 1,2
-        let condition6 = fanValue >= 1 && fanValue <= 2;
-        return condition6;
-      }
-      if(requestData.hl_switch !== null){
-        let hl_switch = parseInt(item.hl_switch); // 1,2
-        let condition7 = hl_switch >= 1 && hl_switch <= 2 ;
-        return condition7;
-      }
-    });
-  let groupedData = filteredData.reduce((groups, item) => {
-  let key = item.module;
-  groups[key] = groups[key] || [];
-  groups[key].push(item);
-  return groups;
-}, {});
-  Object.keys(groupedData).forEach(module => {
-  let tableHTML = `<table class="table table-striped suggestions_list">
-                    <thead>
-                      <tr>
-                        <th>Select</th>
-                        <th>Touch Panel</th>
-                      </tr>
-                    </thead>
-                    <tbody>`;
+  // let data = JSON.parse(sessionStorage.getItem('panel_sugg'))
+  $.ajax({
+      url: 'fetch_suggestions.php',
+      type: 'POST',
+      data: JSON.stringify(requestData), // Send requestData as JSON
+      contentType: 'application/json',
+      success: function(dataar) {
+        
+if (Array.isArray(dataar)) {
+    // Data is already an array, no need to convert
+    var data = dataar;
+} else {
+    // Data is an object, convert to array using Object.values()
+    var data = Object.values(dataar);
+}
 
-  groupedData[module].forEach(item => {
-    tableHTML += `<tr>
-                    <td><input class="form-check-input al-room-check panel-select" type="checkbox" id="${item.id}" value="${item.name}"></td>
-                    <td>${item.name}</td>
-                  </tr>`;
+
+        var modules = {};
+    // Group the data by the 'module' field
+    data.forEach(function(module) {
+        if (!modules.hasOwnProperty(module.module)) {
+            modules[module.module] = [];
+        }
+        modules[module.module].push(module);
+    });
+
+    // Iterate over each unique module
+    Object.keys(modules).forEach(function(moduleName) {
+        var moduleData = modules[moduleName];
+        
+        table = $('<table class="table table-striped"></table>');
+        // Create table header
+        // var headerRow = $('<tr scope="col"></tr>');
+        // var headers = ['', 'Module'];
+        // headers.forEach(function(headerText) {
+        //     var th = $('<th></th>').text(headerText);
+        //     headerRow.append(th);
+        // });
+        // table.append(headerRow);
+
+        // Populate table rows with module data
+        moduleData.forEach(function(module) {
+            var row = $('<tr></tr>');
+            var checkboxCell = $('<td></td>').html('<input class="form-check-input al-room-check  panel-select" type="checkbox" id="' + module.id + '" value="'+ module.name +'">');
+
+            var nameCell = $('<td></td>').text('alliée ' + module.name);
+            // var typeCell = $('<td></td>').text(module.module);
+            
+            row.append(checkboxCell, nameCell);
+            table.append(row);
+        });
+        $('.suggestions_list').append('<h3>'+moduleName+'</h3>');
+        // Append the table to the suggestions list
+        $('.suggestions_list').append(table);
+    });
+},
+
+      error: function(xhr, status, error) {
+      console.error('Error fetching data:', xhr + status +error);
+      }
   });
 
-  tableHTML += `</tbody></table>`;
-  document.getElementById("datatables").innerHTML += (`<h4>Module: <b>${module}</b></h4>`);
-  document.getElementById("datatables").innerHTML += tableHTML;
-});
 
 }
 
